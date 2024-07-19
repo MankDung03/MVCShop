@@ -1,0 +1,18 @@
+<%- include("layouts/head.ejs", {title:"Danh mục sản phẩm"})%> 
+<%- include("layouts/header.ejs")%> 
+<%- include("layouts/menu.ejs")%>
+<%- include("layouts/slider.ejs")%> 
+<!--	List Product	-->
+                <div class="products">
+                    <h3><%= title%> ( hiện có <%= total%> sản phẩm ) </h3>
+                    <div class="product-list card-deck">
+                        <%for(let item of products){%>
+                            <%- include ("./components/product_item.ejs",{item})%>
+                        <%}%>
+
+                    </div>
+                </div>
+                <!--	End List Product	-->
+            </div>
+<%- include("layouts/sidebar.ejs")%> 
+<%- include("layouts/footer.ejs")%>

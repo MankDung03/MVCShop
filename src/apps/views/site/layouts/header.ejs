@@ -1,0 +1,42 @@
+<body>
+
+    <!--	Header	-->
+    <div id="header">
+        <div class="container">
+            <div class="row">
+                <div id="logo" class="col-lg-3 col-md-3 col-sm-12">
+                    <% if (configs) { %>
+                        <h1><a href="/"><img class="img-fluid" src="../uploads/images/<%=configs?.logo_header%>"></a></h1>
+                        <% } else { %>
+                        <h1><a href="/"><img class="img-fluid" src="images/logo.png"></a></h1>
+                        <% } %>
+                </div>
+                <div id="search" class="col-lg-5 col-md-5 col-sm-12">
+                    <form action="/search" class="form-inline">
+                        <input name="keyword" class="form-control mt-3" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <button class="btn btn-danger mt-3" type="submit">Tìm kiếm</button>
+                    </form>
+                </div>
+                
+                <div id="cart" class="col-lg-4 col-md-4 col-sm-12">
+                    <a class="mt-4 mr-2" href="/cart">giỏ hàng</a><span class="mt-3">
+                        <%=totalCartItems%>
+                    </span>
+                    <%if (customer){%>
+                        <i class="mt-4 mr-2" style="color: white">Xin chào, <a href="/historyOrder"> <b style="color: red; text-transform: capitalize;"> <%= customer.full_name %></b></a></i>
+                    </br>
+                        <a href="/signout" class="mt-4 mr-2" style="position: absolute; top: 18px; left: 300px;">Đăng xuất</a>
+                        <% } else { %>
+                    <a href="/signin" class="mt-4 mr-2" style="position: absolute; top: -2px; left: 200px;">Đăng nhập</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <!--	End Header	-->
+    
+    

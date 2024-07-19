@@ -1,0 +1,142 @@
+<!-- index.ejs -->
+<%- include("layouts/head.ejs", { title: "Quản lý đơn hàng" }) %>
+    <%- include("layouts/header.ejs") %>
+        <%- include("layouts/menu.ejs") %>
+            <%- include("layouts/slider.ejs") %>
+
+                <style>
+                    /* styles/main.css */
+                    .table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 20px;
+                    }
+
+                    .table th,
+                    .table td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                    }
+
+                    .table thead .orderTh {
+                        text-align: center;
+                    }
+
+                    .table tr .orderTd {
+                        text-align: center;
+                    }
+
+                    .table th {
+                        background-color: #f2f2f2;
+                    }
+
+                    .login-reminder {
+                        background: white;
+                        margin-top: 5px;
+                        padding-bottom: 10px;
+                        border-radius: 3px;
+                        text-align: center;
+                    }
+
+                    .login-reminder p {
+                        font-size: 15px;
+                    }
+
+                    .login-reminder .btn {
+                        font-size: 15px;
+                    }
+                </style>
+                <!-- Cart -->
+                <% if (email) { %>
+                    <div id="my-cart">
+                        <!-- Table to display products -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="orderTh" scope="col">STT</th>
+                                    <th class="orderTh" scope="col">Tên sản phẩm</th>
+                                    <th class="orderTh" scope="col">Ảnh sản phẩm</th>
+                                    <th class="orderTh" scope="col">Số lượng</th>
+                                    <th class="orderTh" scope="col">Giá</th>
+                                    <th class="orderTh" scope="col">Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for (let order of orders) { let totalAmount=0; for (let item of order.items) {
+                                    totalAmount +=item.prd_price * item.prd_qty; } order.total_amount=totalAmount; }%>
+                                    <!-- Replace the dummy data with actual data from your system -->
+                                    <% let index=1; count=1; countProduct=1%>
+                                        <% for (let order of orders) { %>
+                                            <tr>
+                                                <td><b>
+                                                        <%= index++ %>
+                                                    </b></td>
+                                                <td class="orderTd" colspan="5"><b>Đơn hàng thứ <%= count++%></b><b
+                                                        style="color: red; font-size: 14px;">
+                                                        <%= order.order_id %> - Tổng tiền: <%=
+                                                                vndPrice(order.total_amount) %>
+                                                    </b></td>
+                                            </tr>
+                                            <% for (let item of order.items) { %>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <%= countProduct++%>. <%= item.prd_name %>
+                                                    </td>
+                                                    <td class="orderTd"><img
+                                                            src="../uploads/images/<%= item.prd_thumbnail %>"
+                                                            height="100px" width="100px" alt=""></td>
+                                                    <td class="orderTd">
+                                                        <%= item.prd_qty %>
+                                                    </td>
+                                                    <td class="orderTd">
+                                                        <%= vndPrice(item.prd_price) %>
+                                                    </td>
+                                                    <td class="orderTd">
+                                                        <%= vndPrice(item.prd_price * item.prd_qty) %>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <div class="login-reminder row">
+                            <p>Vui lòng đăng nhập để mua giỏ hàng</p>
+                            <a href="/login" class="btn btn-primary">Đăng nhập</a>
+                        </div>
+                        <% } %>
+                            <div class="panel-footer">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination" style="margin-top: 100px; margin-left: 550px;">
+                                        <%if(page> 1){%>
+                                            <li class="page-item"><a class="page-link"
+                                                    href="/historyOrder/?page=<%=page-1%>">&laquo;</a></li>
+                                            <%}%>
+                                                <%for(let item of pages){%>
+                                                    <li class="page-item <%= item === page? 'active' : '' %>">
+                                                        <%if(item==="..." ){%>
+                                                            <span class="page-link">
+                                                                <%=item%>
+                                                            </span>
+                                                            <%}else{%>
+                                                                <a class="page-link"
+                                                                    href="/historyOrder/?page=<%= item%>">
+                                                                    <%=item%>
+                                                                </a>
+                                                                <%}%>
+                                                    </li>
+                                                    <%}%>
+                                                        <%if(page < totalPages){%>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="/historyOrder/?page=<%=page+1%>">&raquo;</a>
+                                                            </li>
+                                                            <%}%>
+                                    </ul>
+                                </nav>
+                            </div>
+                            </div>
+                            <%- include("layouts/sidebar.ejs") %>
+                                <%- include("layouts/footer.ejs") %>

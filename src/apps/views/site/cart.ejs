@@ -1,0 +1,123 @@
+<%- include("layouts/head.ejs", {title:"Giỏ hàng"})%>
+    <%- include("layouts/header.ejs")%>
+        <%- include("layouts/menu.ejs")%>
+            <%- include("layouts/slider.ejs")%>
+                <!--	Cart	-->
+                <% if (email) { %> <!--Sửa: thêm điều kiện kiểm tra customer-->
+                <div id="my-cart">
+                    <div class="row">
+                        <div class="cart-nav-item col-lg-7 col-md-7 col-sm-12">Thông tin sản phẩm</div>
+                        <div class="cart-nav-item col-lg-2 col-md-2 col-sm-12">Tùy chọn</div>
+                        <div class="cart-nav-item col-lg-3 col-md-3 col-sm-12">Giá</div>
+                    </div>
+                    <form method="post" action="/update-item-cart">
+                        <%for(let item of items){%>
+                            <div class="cart-item row">
+                                <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
+                                    <img src="../uploads/images/<%=item.thumbnail%>">
+                                    <h4>
+                                        <%=item.name%>
+                                    </h4>
+                                </div>
+                                <div class="cart-quantity col-lg-2 col-md-2 col-sm-12">
+                                    <input name="products[<%=item._id%>][qty]" type="number" id="quantity"
+                                        class="form-control form-blue quantity" value="<%=item.qty%>" min="1">
+                                </div>
+                                <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>
+                                        <%= vndPrice(item?.qty*item?.price)%>
+                                    </b><a href="/delete-item-cart-<%=item._id%>">Xóa</a></div>
+                            </div>
+                            <%}%>
+                                <div class="row">
+                                    <div class="cart-thumb col-lg-7 col-md-7 col-sm-12">
+                                        <button id="update-cart" class="btn btn-success" type="submit" name="sbm">Cập
+                                            nhật giỏ hàng</button>
+                                    </div>
+                                    <div class="cart-total col-lg-2 col-md-2 col-sm-12"><b>Tổng cộng:</b></div>
+                                    <div class="cart-price col-lg-3 col-md-3 col-sm-12"><b>
+                                            <%=vndPrice(items.reduce((total,item)=> total + item.qty*item.price,0))%>
+                                        </b></div>
+                                </div>
+                    </form>
+
+                </div>
+                <!--	End Cart	-->
+                <!--	Customer Info	-->
+                <div id="customer">
+                    <form method="post" action="/order">
+                        <div class="row">
+
+                            <div  class="col-lg-4 col-md-4 col-sm-12">
+                                <input hidden type="text" name="name" class="form-control"
+                                    value="<%= customer.full_name%>">
+                            </div>
+                            <div hidden class="col-lg-4 col-md-4 col-sm-12">
+                                <input  type="text" name="phone"
+                                    class="form-control" value="<%= customer.phone%>">
+                            </div>
+                            <div hidden class="col-lg-4 col-md-4 col-sm-12">
+                                <input type="text" name="email" class="form-control"
+                                    value="<%=customer.email%>">
+                            </div>
+                            <div hidden id="customer-add" class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="address"
+                                    class="form-control" value="<%=customer.address%>">
+                            </div>
+                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="prd_id"
+                                    class="form-control">
+                            </div>
+                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="prd_name"
+                                    class="form-control">
+                            </div>
+                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="prd_price"
+                                    class="form-control">
+                            </div>
+                            <div hidden class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="prd_thumbnail"
+                                    class="form-control">
+                            </div>
+                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
+                                <input type="text" name="prd_qty"
+                                    class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="by-now col-lg-6 col-md-6 col-sm-12">
+                                <button type="submit" class="btn btn-danger">
+                                    <b>Mua ngay</b>
+                                    <span>Giao hàng tận nơi siêu tốc</span>
+                                </button>
+                            </div>
+                            <div class="by-now col-lg-6 col-md-6 col-sm-12">
+                                <button type="button" class="btn btn-primary">
+                                    <b>Trả góp Online</b>
+                                    <span>Vui lòng call (+84) 0988 550 553</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--	End Customer Info	-->
+                <% } %> <!-- Kết thúc: thêm điều kiện kiểm tra customer -->
+                <% if (!email) { %>
+                    <div class="login-reminder" class="row" style="
+                        background: white;
+                        margin-top: 5px ;
+                        padding-bottom: 10px; 
+                        border-radius: 3px;
+                        text-align: center;
+                        ">
+                        <p style="font-size: 18px; padding-top: 10px;">Vui lòng đăng nhập để mua giỏ hàng</p>
+                        <a href="/signin" class="btn btn-primary" style="font-size: 18px;">Đăng nhập</a>
+                    </div>
+                <% } %>
+                
+                </div>
+                <!--	End Body	-->
+<%- include("layouts/sidebar.ejs")%>
+<%- include("layouts/footer.ejs")%>
