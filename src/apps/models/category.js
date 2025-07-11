@@ -17,6 +17,10 @@ const categorySchema = new mongoose.Schema({
         type: Boolean,
         default:false,
     },
+    is_delete:{
+         type: Boolean,
+        default:false,
+    }
 }, {
     timestamps: true,
 });

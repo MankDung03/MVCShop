@@ -19,6 +19,10 @@ const customerSchema = new mongoose.Schema({
     address:{
         type:String,
         require:true,        
+    },
+    is_delete:{
+        type: Boolean,
+        default:false
     }
 
 

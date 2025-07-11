@@ -12,26 +12,31 @@
 </p>
 
 <table border="1" cellspacing="0" cellpadding="10" bordercolor="#305eb3" width="100%">
-	<tr bgcolor="#305eb3">
-    	<td width="70%"><b><font color="#FFFFFF">Sản phẩm</font></b></td>
+    <tr bgcolor="#305eb3">
+        <td width="70%"><b><font color="#FFFFFF">Sản phẩm</font></b></td>
         <td width="10%"><b><font color="#FFFFFF">Số lượng</font></b></td>
         <td width="20%"><b><font color="#FFFFFF">Tổng tiền</font></b></td>
     </tr>
     <%for(let item of items){%>
     <tr>
-    	<td width="70%"><%=item.name%></td>
-        <td width="10%"><%=item.qrt%></td>
-        <td width="20%"><%=item.price%></td>
-    </tr>
+        <td width="70%"><%=item.name%></td>
+        <td width="10%"><%=item.qty%></td> 
+        <td width="20%"><%=vndPrice(item.price)%></td> </tr>
     <%}%>
     <tr>
-    	<td colspan="2" width="70%"></td>
-        <td width="20%"><b><font color="#FF0000"> <%=items.reduce((total,item)=> total + item.qty*item.price,0)%>đ</font></b></td>
-    </tr>
+        <td colspan="2" width="70%"></td>
+        <td width="20%"><b><font color="#FF0000"> 
+           <%= vndPrice(items.reduce((total, item) => {
+    const qty = Number(item.qty) || 0;
+    const price = Number(item.price) || 0;
+    return total + qty * price;
+}, 0) )%>
+
+        </font></b></td> </tr>
 </table>
 
 <p>
-	Cám ơn quý khách đã mua hàng tại Shop của chúng tôi, bộ phận giao hàng sẽ liên hệ với quý khách để xác nhận sau 5 phút kể từ khi đặt hàng thành công và chuyển hàng đến quý khách chậm nhất sau 24 tiếng.
+    Cám ơn quý khách đã mua hàng tại Shop của chúng tôi, bộ phận giao hàng sẽ liên hệ với quý khách để xác nhận sau 5 phút kể từ khi đặt hàng thành công và chuyển hàng đến quý khách chậm nhất sau 24 tiếng.
 </p>
 
 </body>

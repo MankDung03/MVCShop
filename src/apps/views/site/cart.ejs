@@ -43,65 +43,47 @@
                 </div>
                 <!--	End Cart	-->
                 <!--	Customer Info	-->
-                <div id="customer">
-                    <form method="post" action="/order">
-                        <div class="row">
+             <div id="customer">
+    <form id="paymentForm" method="post" action="/order">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <input hidden type="text" name="name" class="form-control"
+                    value="<%= customer.full_name%>">
+            </div>
+            <div hidden class="col-lg-4 col-md-4 col-sm-12">
+                <input type="text" name="phone"
+                    class="form-control" value="<%= customer.phone%>">
+            </div>
+            <div hidden class="col-lg-4 col-md-4 col-sm-12">
+                <input type="text" name="email" class="form-control"
+                    value="<%=customer.email%>">
+            </div>
+            <div hidden id="customer-add" class="col-lg-12 col-md-12 col-sm-12">
+                <input type="text" name="address"
+                    class="form-control" value="<%=customer.address%>">
+            </div>
+            </div>
 
-                            <div  class="col-lg-4 col-md-4 col-sm-12">
-                                <input hidden type="text" name="name" class="form-control"
-                                    value="<%= customer.full_name%>">
-                            </div>
-                            <div hidden class="col-lg-4 col-md-4 col-sm-12">
-                                <input  type="text" name="phone"
-                                    class="form-control" value="<%= customer.phone%>">
-                            </div>
-                            <div hidden class="col-lg-4 col-md-4 col-sm-12">
-                                <input type="text" name="email" class="form-control"
-                                    value="<%=customer.email%>">
-                            </div>
-                            <div hidden id="customer-add" class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="address"
-                                    class="form-control" value="<%=customer.address%>">
-                            </div>
-                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="prd_id"
-                                    class="form-control">
-                            </div>
-                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="prd_name"
-                                    class="form-control">
-                            </div>
-                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="prd_price"
-                                    class="form-control">
-                            </div>
-                            <div hidden class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="prd_thumbnail"
-                                    class="form-control">
-                            </div>
-                            <div hidden  class="col-lg-12 col-md-12 col-sm-12">
-                                <input type="text" name="prd_qty"
-                                    class="form-control">
-                            </div>
+<div class="row text-center">
+    <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+        <button type="button" id="btnBuyNow" class="btn w-100 py-2" style="background-color:#dc3545; color: white; border-radius: 10px;">
+            <i class="fas fa-truck-fast me-2"></i>
+            <strong style="font-size: 16px;">Thanh toán khi nhận hàng</strong><br>
+            <small style="font-size: 13px;">Giao hàng nhanh - An toàn</small>
+        </button>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+        <button type="button" id="btnInstallment" class="btn w-100 py-2" style="background-color:#0d6efd; color: white; border-radius: 10px;">
+            <i class="fas fa-mobile-alt me-2"></i>
+            <strong style="font-size: 16px;">Thanh toán qua MoMo</strong><br>
+            <small style="font-size: 13px;">Tiện lợi - Xác nhận tức thì</small>
+        </button>
+    </div>
+</div>
 
-                        </div>
+    </form>
+</div>
 
-                        <div class="row">
-                            <div class="by-now col-lg-6 col-md-6 col-sm-12">
-                                <button type="submit" class="btn btn-danger">
-                                    <b>Mua ngay</b>
-                                    <span>Giao hàng tận nơi siêu tốc</span>
-                                </button>
-                            </div>
-                            <div class="by-now col-lg-6 col-md-6 col-sm-12">
-                                <button type="button" class="btn btn-primary">
-                                    <b>Trả góp Online</b>
-                                    <span>Vui lòng call (+84) 0988 550 553</span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <!--	End Customer Info	-->
                 <% } %> <!-- Kết thúc: thêm điều kiện kiểm tra customer -->
                 <% if (!email) { %>
@@ -121,3 +103,25 @@
                 <!--	End Body	-->
 <%- include("layouts/sidebar.ejs")%>
 <%- include("layouts/footer.ejs")%>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentForm = document.getElementById('paymentForm');
+        const btnBuyNow = document.getElementById('btnBuyNow');
+        const btnInstallment = document.getElementById('btnInstallment');
+
+        if (btnBuyNow) {
+            btnBuyNow.addEventListener('click', function() {
+                paymentForm.action = '/order'; // Thay đổi action của form
+                paymentForm.submit(); // Gửi form
+            });
+        }
+
+        if (btnInstallment) {
+            btnInstallment.addEventListener('click', function() {
+                paymentForm.action = '/payment'; // Đặt action về /payment (đã là mặc định)
+                paymentForm.submit(); // Gửi form
+            });
+        }
+    });
+    </script>

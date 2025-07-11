@@ -20,6 +20,8 @@ const banner=async(req,res)=>{
         .find()
         .countDocuments();
     const totalPages = Math.ceil(totalRows / limit);
+    console.log(banners);
+    
     res.render("admin/advertises/banners/banner",{
         banners,
         pages: pagination(page, limit, totalRows),
@@ -42,7 +44,7 @@ const storeBanner=(req,res)=>{
     if(file){
          //insert
         const thumbnails = `banners/${file.originalname}`;
-        console.log(thumbnails);
+       
         banner["thumbnails"] = thumbnails;
         fs.renameSync(file.path, path.resolve(config.get("app.baseUrlUpload"),thumbnails))
         new bannerModel(banner).save();
@@ -96,7 +98,7 @@ const storeSlider=(req,res)=>{
     if(file){
          //insert
         const thumbnails = `sliders/${file.originalname}`;
-        console.log(thumbnails);
+      
         slider["thumbnails"] = thumbnails;
         fs.renameSync(file.path, path.resolve(config.get("app.baseUrlUpload"),thumbnails))
         new sliderModel(slider).save();

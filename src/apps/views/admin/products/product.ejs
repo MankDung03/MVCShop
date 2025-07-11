@@ -22,32 +22,32 @@
           <!-- Thêm select box mới và nút submit vào đây -->
           <div class="row">
             <div class="col-lg-3">
-                <form method="get" action="/admin/products">
-                    <div class="form-group">
-                        <label for="category_select">Phân loại danh mục:</label>
-                        <select class="form-control" id="category_select" name="category">
-                            <option value="">Tất cả danh mục</option>
-                            <% for(let category of categories){ %>
-                                <option value="<%= category._id %>"
-                                    <%= category._id === categoryId ? "selected" : " "%>
-                                    >
-                                    <%= category.title %>
-                                </option>
-                                <% } %>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lọc</button>
-                </form>
-                <form method="get" action="/admin/products">
-                    <div class="form-group">
-                        <label>Phân loại danh mục:</label>
-                        <select class="form-control" name="is_stock">
-                            <option value="0">h</option>
-                            <option value="1">c</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lọc</button>
-                </form>
+               <form method="get" action="/admin/products">
+    <div class="form-group">
+        <label for="category_select">Phân loại danh mục:</label>
+        <select class="form-control" id="category_select" name="category">
+            <option value="">Tất cả danh mục</option>
+            <% for(let category of categories){ %>
+                <option value="<%= category._id %>" 
+                    <%= category._id === categoryId ? "selected" : "" %>>
+                    <%= category.title %>
+                </option>
+            <% } %>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="is_stock_select">Trạng thái kho:</label>
+        <select class="form-control" id="is_stock_select" name="is_stock">
+            <option value="">Tất cả</option>
+            <option value="1" >Còn hàng</option>
+            <option value="0">Hết hàng</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lọc</button>
+</form>
+
             </div>
         </div>
         <!-- Kết thúc phần select box và nút submit -->
@@ -61,22 +61,24 @@
 
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="id" data-sortable="true">STT</th>
 						        <th data-field="name"  data-sortable="true">Tên sản phẩm</th>
                                 <th data-field="price" data-sortable="true">Giá</th>
                                 <th>Ảnh sản phẩm</th>
                                 <th>Trạng thái</th>
                                 <th>Danh mục</th>
+                                <th>Số lượng trong kho</th>
                                 <th>Hành động</th>
                                 <th>Chọn</th>
 						    </tr>
                             </thead>
                             <tbody>
+                              <% let idCounter = 1;%>
                                     <%for(let product of products){%>
                                     <tr>
-                                        <td style="">1</td>
+                                        <td style=""><%= idCounter++%></td>
                                         <td style=""><%=product.name%></td>
-                                        <td style=""><%=product.price%>VND</td>
+                                        <td style=""><%=vndPrice(product.price)%></td>
                                         <td style="text-align: center"><img width="130" height="180" src="../uploads/images/<%=product.thumbnail%>" /></td>
                                         <td><span class="label label-<%= product.is_stock ? 'success' : 'danger'%>">
                                             <%if(product.is_stock){%>
@@ -86,6 +88,7 @@
                                                  <%}%>
                                             </span></td>
                                         <td><%=product.cat_id.title%></td>
+                                        <td><%=product.stock%></td>
                                         <td class="form-group">
                                             <a href="/admin/products/edit/<%=product._id%>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
                                             <a onclick="clickDelete('<%=product._id%>')" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
@@ -103,6 +106,11 @@
                           </div>
                     </div>
                     <div class="panel-footer">
+                          <div id="toolbar" class="btn-group">
+                        <a href="/admin/products/trash" class="btn btn-info">
+                          <i class="glyphicon glyphicon-trash"></i> Sản phẩm đã xóa
+                        </a>
+                      </div>
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <%if(page > 1){%>

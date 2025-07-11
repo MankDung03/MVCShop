@@ -50,6 +50,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    is_delete:{
+        type: Boolean,
+        default:false
+    },
+    stock:{
+        type: Number,
+        default:0
+    }
 },{
     timestamps: true,
 });

@@ -29,20 +29,21 @@
 
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="id" data-sortable="true">STT</th>
 						        <th data-field="name"  data-sortable="true">Tên slider</th>
                                 <th>Ảnh sản phẩm</th>
                                 <th  data-sortable="true">Hành động</th>
-                                <th>Chọn</th>
+                                
                                 
                 
                               
 						    </tr>
                             </thead>
                             <tbody>
+                                       <% let idCounter = 1;%>
                                     <%for(let slider of sliders){%>
                                     <tr>
-                                        <td style="">1</td>
+                                        <td style=""><%= idCounter++%></td>
                                         <td style=""><%=slider.name%></td>
                                         <td style="text-align: center"><img class="img-fluid"   src="../uploads/images/<%=slider.thumbnails%>" /></td>
                                         

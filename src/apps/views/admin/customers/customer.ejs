@@ -5,19 +5,17 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Danh sách thành viên</li>
+				<li class="active">Danh sách khách hàng</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Danh sách thành viên</h1>
+				<h1 class="page-header">Danh sách khách hàng</h1>
 			</div>
 		</div><!--/.row-->
 		<div id="toolbar" class="btn-group">
-            <a href="/admin/users/create" class="btn btn-success">
-                <i class="glyphicon glyphicon-plus"></i> Thêm thành viên
-            </a>
+            
         </div>
 		<div class="row">
 			<div class="col-lg-12">
@@ -32,25 +30,33 @@
 						        <th data-field="id" data-sortable="true">STT</th>
 						        <th data-field="name"  data-sortable="true">Họ & Tên</th>
                                 <th data-field="price" data-sortable="true">Email</th>
-                    
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Ngày tạo</th>
+								<th>Tổng đơn hàng</th>
                                 <th>Hành động</th>
 								<th>Chọn</th>
 						    </tr>
                             </thead>
-                            <tbody>
-								 <% let idCounter = 1;%>
-                                <%for(let user of users){%>
+                            <tbody> 
+								<% let idCounter = 1;%>
+                                <%for(let customer of customers){%>
                                 <tr>
                                     <td style=""><%= idCounter++%></td>
-                                    <td style=""><%=user.full_name%></td>
-                                    <td style=""><%=user.email%></td>
-                                    
+                                    <td style=""><%=customer.full_name%></td>
+                                    <td style=""><%=customer.email%></td>
+                                    <td style=""><%=customer.phone%></td>
+                                    <td style=""><%=customer.address%></td>
+                                    <td style=""><%=customer.createdAt%></td>
+                                    <td style=""><%=customer.orderCount%></td>
+								
+                                   
                                     <td class="form-group">
-                                        <a href="/admin/users/edit/<%=user.id%>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-                                        <a href="/admin/users/delete/<%=user.id%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                                       
+                                        <a href="/admin/customers/delete/<%=customer.id%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                                     </td>
 									<td>
-												<input class="select-checkbox" style="cursor: pointer;" name="idsPrd[]" type="checkbox" value="<%=user._id%>" />
+												<input class="select-checkbox" style="cursor: pointer;" name="idsPrd[]" type="checkbox" value="<%=customer._id%>" />
 									</td>
                                 </tr>
                                 <%}%>
@@ -64,26 +70,26 @@
                     </div>
                 	<div class="panel-footer">
 								<div id="toolbar" class="btn-group">
-									<a href="/admin/users/trash" class="btn btn-info">
+									<a href="/admin/customers/trash" class="btn btn-info">
 									  <i class="glyphicon glyphicon-trash"></i> Danh mục đã xóa
 									</a>
 								  </div>
 								<nav aria-label="Page navigation example">
 									<ul class="pagination">
 										  <%if(page > 1){%>
-										<li class="page-item"><a class="page-link" href="/admin/users?page=<%=page-1%>">&laquo;</a></li>
+										<li class="page-item"><a class="page-link" href="/admin/customers?page=<%=page-1%>">&laquo;</a></li>
 										   <%}%>
 										   <%for(let item of pages){%>
                                					 <li class="page-item <%= item === page? 'active' : '' %>">
                                    				 <%if(item === "..."){%>
                                   					  <span class="page-link"><%=item%></span>
                                   				  <%}else{%>
-                                  						 <a class="page-link" href="/admin/users?page=<%=item%>"><%=item%></a>
+                                  						 <a class="page-link" href="/admin/customers?page=<%=item%>"><%=item%></a>
                                   				  <%}%>
                               					</li>
                                 			<%}%>
 											  <%if(page < totalPages){%>
-										<li class="page-item"><a class="page-link" href="/admin/users?page=<%=page+1%>">&raquo;</a></li>
+										<li class="page-item"><a class="page-link" href="/admin/customers?page=<%=page+1%>">&raquo;</a></li>
 												<%}%>
 									</ul>
 								</nav>
@@ -100,7 +106,7 @@
 	<script>
         function handleConfirm(id, action) {
           const isConfirm = confirm(`Bạn có chắc chắn ${action} không?`)
-          const link = () => window.location.href = `/admin/users/delete/${id}`
+          const link = () => window.location.href = `/admin/customers/delete/${id}`
           return isConfirm ? link() : false
         }
         const clickDelete = (id) => handleConfirm(id, 'delete')
@@ -122,7 +128,7 @@
         return false
       } else {
         const isConfirm = confirm(`Bạn có muốn ${action} các danh mục đã chọn không?`)
-        const link = () => window.location.href = `/admin/users/${action}/${strIdsValue}`
+        const link = () => window.location.href = `/admin/customers/${action}/${strIdsValue}`
         return isConfirm ? link() : false
       }
     }

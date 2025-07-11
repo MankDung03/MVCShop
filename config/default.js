@@ -16,8 +16,8 @@ module.exports = {
         host: "smtp.gmail.com",
         port: 587,
         secure: false,
-        user: "quantri.vietproshop@gmail.com",
-        pass: "tjpj rclg ithn rkby",
+        user: "lmdung@gmail.com",
+        pass: "nnww yogt eiie vyac",
     },
     passport:{
        google_client_id: process.env.GOOGLE_CLIENT_ID||"SDADASDA",

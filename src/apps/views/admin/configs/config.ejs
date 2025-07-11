@@ -29,7 +29,7 @@
 
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="id" data-sortable="true">STT</th>
 						        <th data-field="logo-header"  data-sortable="true">Logo header</th>
 						        <th data-field="logo-footer"  data-sortable="true">Logo footer</th>
 						        <th data-field="intro"  data-sortable="true">intro</th>
@@ -50,7 +50,7 @@
                                     <%let i=1%>
                                     <%for(let config of configs){%>
                                     <tr>
-                                        <td style=""><%=i%></td>
+                                        <td style=""><%=i++%></td>
                                         <td style="text-align: center " ><img class="img-fluid" width="250" height="50px"   src="../uploads/images/<%=config.logo_header%>" /></td>
                                         <td style="text-align: center"><img class="img-fluid" width="250px" height="50px"  src="../uploads/images/<%=config.logo_footer%>" /></td>
                                       

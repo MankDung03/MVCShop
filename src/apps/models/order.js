@@ -16,7 +16,12 @@ const orderSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true,
-    },
+    },   
+    status:{
+            type:String,
+            default: "Đang xử lí",
+        },
+      is_payment: { type: Boolean, default: false },
     items: [{ // Sử dụng mảng để lưu trữ thông tin các mục hàng trong đơn hàng
         prd_id: {
             type: mongoose.Types.ObjectId,
@@ -40,6 +45,7 @@ const orderSchema = new mongoose.Schema({
             required: true,
 
         }
+     
         // Bạn có thể thêm các trường khác tùy thuộc vào nhu cầu của bạn
     }],
 },{timestamps:true});

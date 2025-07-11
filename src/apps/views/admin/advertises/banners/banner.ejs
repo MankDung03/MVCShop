@@ -29,11 +29,12 @@
 
 						    <thead>
 						    <tr>
-						        <th data-field="id" data-sortable="true">ID</th>
+						        <th data-field="id" data-sortable="true">STT</th>
 						        <th data-field="name"  data-sortable="true">Tên sản phẩm</th>
+                                   <th>Ảnh sản phẩm</th>
                                 <th  data-sortable="true">Hành động</th>
-                                <th>Ảnh sản phẩm</th>
-                                <th>Chọn </th>
+                             
+                   
                                 
                 
                               
@@ -43,9 +44,9 @@
                                     <%let i=1%>
                                     <%for(let banner of banners){%>
                                     <tr>
-                                        <td style=""><%=i%></td>
+                                        <td style=""><%=i++%></td>
                                         <td style=""><%=banner.name%></td>
-                                        <td style="text-align: center"><img class="img-fluid"   src="../uploads/images/<%=banner.thumbnails%>" /></td>
+                                        <td style="text-align: center"><img class="img-fluid"   src="/static/uploads/images/banners/banner-1.png" /></td>
                                         
                                         <td class="form-group">
                                             <a href="/admin/delete-banners/<%=banner._id%>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>

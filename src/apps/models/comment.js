@@ -17,6 +17,14 @@ const commentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    is_report:{
+        type: Boolean,
+        default:false,
+    },
+    is_allowed:{
+        type: Boolean,
+        default:false
+    }
 
 
 },{

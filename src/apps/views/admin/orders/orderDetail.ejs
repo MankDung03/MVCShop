@@ -1,0 +1,70 @@
+<%- include("../layout/head.ejs", {title: "Chi tiết đơn hàng"}) %>
+<%- include("../layout/header.ejs") %>
+<%- include("../layout/sidebar.ejs") %>
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+            <li class="active">Chi tiết đơn hàng</li>
+        </ol>
+    </div><div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Đơn hàng: <%= order._id %></h1>
+        </div>
+    </div><div class="panel panel-default">
+        <div class="panel-body">
+            <p><b>Khách hàng:</b> <%= order.name %></p>
+            <p><b>Email:</b> <%= order.email %></p>
+            <p><b>Điện thoại:</b> <%= order.phone %></p>
+            <p><b>Địa chỉ:</b> <%= order.address %></p>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Ảnh sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% order.items.forEach((item, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= item.prd_name %></td>
+                            <td><img src="../uploads/images/<%= item.prd_thumbnail %>" alt="<%= item.prd_name %>" width="100"></td>
+                            <td><%= item.prd_qty %></td>
+                            <td><%= item.prd_price %></td>
+                            <td><%= item.prd_price * item.prd_qty %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+            <h3>Tổng tiền: <%= totalAmount %></h3>
+        <form action="/admin/orders/<%= order._id %>/status" method="GET">
+            <div class="form-group">
+  <label>Tình trạng đơn hàng</label>
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <select name="statusText" class="form-control" style="width: 200px;">
+      <option value="Đang xử lí" <%= order.status === 'Đang xử lí' ? 'selected' : '' %>>Đang xử lí</option>
+      <option value="Đang giao hàng" <%= order.status === 'Đang giao hàng' ? 'selected' : '' %>>Đang giao hàng</option>
+      <option value="Đã giao hàng" <%= order.status === 'Đã giao hàng' ? 'selected' : '' %>>Đã giao hàng</option>
+      <option value="Đã hủy" <%= order.status === 'Đã hủy' ? 'selected' : '' %>>Đã hủy</option>
+    </select>
+    
+  <button type="submit" class="btn btn-success" title="Lưu trạng thái">
+    <i class="fas fa-save me-1"></i> Lưu
+</button>
+
+  </div>
+</div>
+</form>
+
+
+        </div>
+    </div>
+</div>

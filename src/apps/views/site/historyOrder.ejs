@@ -60,6 +60,7 @@
                                     <th class="orderTh" scope="col">Số lượng</th>
                                     <th class="orderTh" scope="col">Giá</th>
                                     <th class="orderTh" scope="col">Thành tiền</th>
+                                    <th> Tình trạng đơn hàng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,6 +78,28 @@
                                                         <%= order.order_id %> - Tổng tiền: <%=
                                                                 vndPrice(order.total_amount) %>
                                                     </b></td>
+                     <td>
+    <!-- Hiển thị trạng thái với màu sắc tương ứng -->
+    <span class="badge 
+        <%= order.status === 'Đang xử lí' ? 'bg-warning text-dark' : 
+         order.status === 'Đang giao hàng' ? 'bg-warning text-dark' : 
+            order.status === 'Đã hủy' ? 'bg-danger' : 
+            'bg-success' %>">
+        <%= order.status %>
+    </span>
+
+    <!-- Nếu đang xử lý thì hiển thị nút hủy -->
+    <% if (order.status === "Đang xử lí") { %>
+        <div class="mt-2">
+            <a href="/historyOrder/<%= order._id %>" 
+               class="btn btn-sm btn-outline-danger">
+                 Hủy đơn
+            </a>
+        </div>
+    <% } %>
+</td>
+
+
                                             </tr>
                                             <% for (let item of order.items) { %>
                                                 <tr>
